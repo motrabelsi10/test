@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: my-helm-app
+  namespace: argocd   # Namespace dans lequel Argo CD est installé
+spec:
+  project: default    # Nom du projet Argo CD où l'application sera regroupée
+  source:
+    helm:
+      valueFiles:
+        - secrets-values.yaml   # Fichier de valeurs chiffrées pour les secrets
+    targetRevision: v1.2.3   # Exemple: remplacez par le nom de la version de votre release
+    chart: my-chart   # Exemple: remplacez par le nom de votre Helm chart
+    repoURL: ""   # Laissez vide si vous déployez depuis le cluster
+  destination:
+    server: https://kubernetes.default.svc   # Serveur Kubernetes cible
+    namespace: default   # Namespace cible où l'application sera déployée
+
+
